@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/cache
+	http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+            <!--<value>oracle.jdbc.driver.OracleDriver</value>-->
+        </property>
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/shandong</value><!-- 数据库 -->
+        </property>
+
+        <property name="username" value="root"/>
+        <property name="password" value="11021117"/>
+
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="hibernateProperties">
+        <props>
+            <!-- <prop key="hiberate.dialect">org.hibernate.dialect.OracleDialect</prop> --><!-- hibernate4 会自动调用相关的Oracle方言，此处无需设置 -->
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+            <prop key="hibernate.show_sql">true</prop><!-- 发布的时候注释掉 -->
+            <prop key="hibernate.format_sql">true</prop>
+            <prop key="generate_statistics">true</prop>
+            <prop key="cache.use_second_level_cache">true</prop>
+            <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+            <prop key="hibernate.cache.use_query_cache">true</prop>
+        </props>
+    </property>
+    <property name="annotatedClasses">
+        <list>
+            <value>com.zkb.ltk.model.User</value>
+            <value>com.zkb.ltk.model.province_table</value>
+            <value>com.zkb.ltk.model.roadlink</value>
+            <value>com.zkb.ltk.model.shortest_paths</value>
+            <value>com.zkb.ltk.model.stations</value>
+            <value>com.zkb.ltk.model.traffic_data</value>
+        </list>
+    </property>
+
+    </bean>
+
+</beans>
