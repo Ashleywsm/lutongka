@@ -12,8 +12,8 @@ import javax.persistence.*;
 public class stations {
     private String poi_id;
     private String station_name;
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
     private String direction;
     private String roadname;
     private String province;
@@ -38,18 +38,20 @@ public class stations {
     }
 
     @Column(name = "longitude")
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
-    public void setLongitude(String longitude) {
+
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
     @Column(name = "latitude")
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public void setLatitude(String latitude) {
+
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 

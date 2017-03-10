@@ -1,5 +1,6 @@
 package com.zkb.ltk.model;
 //18个
+import java.sql.Timestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,17 +14,17 @@ public class traffic_data {
     private String wasteID;
     private String exStation;
     private String paycard;
-    private String lastMoney;
-    private String inTime;
+    private Double lastMoney;
+    private Timestamp inTime;
     private String inNetID;
     private String inStationID;
     private String origin;
-    private String outTime;
+    private Timestamp outTime;
     private String outNetID;
     private String outStationID;
     private String destination;
-    private String weight;
-    private String overlimit;
+    private Double weight;
+    private Double overlimit;
     private String plateColor;
     private String vehiclePlate;
     private String vehicleModel;
@@ -56,18 +57,20 @@ public class traffic_data {
     }
 
     @Column(name = "lastMoney")
-    public String getLastMoney() {
+    public Double getLastMoney() {
         return lastMoney;
     }
-    public void setLastMoney(String lastMoney) {
+
+    public void setLastMoney(Double lastMoney) {
         this.lastMoney = lastMoney;
     }
 
     @Column(name = "inTime")
-    public String getInTime() {
+    public Timestamp getInTime() {
         return inTime;
     }
-    public void setInTime(String inTime) {
+
+    public void setInTime(Timestamp inTime) {
         this.inTime = inTime;
     }
 
@@ -96,10 +99,11 @@ public class traffic_data {
     }
 
     @Column(name = "outTime")
-    public String getOutTime() {
+    public Timestamp getOutTime() {
         return outTime;
     }
-    public void setOutTime(String outTime) {
+
+    public void setOutTime(Timestamp outTime) {
         this.outTime = outTime;
     }
 
@@ -128,18 +132,20 @@ public class traffic_data {
     }
 
     @Column(name = "weight")
-    public String getWeight() {
+    public Double getWeight() {
         return weight;
     }
-    public void setWeight(String weight) {
+
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
     @Column(name = "overlimit")
-    public String getOverlimit() {
+    public Double getOverlimit() {
         return overlimit;
     }
-    public void setOverlimit(String overlimit) {
+
+    public void setOverlimit(Double overlimit) {
         this.overlimit = overlimit;
     }
 

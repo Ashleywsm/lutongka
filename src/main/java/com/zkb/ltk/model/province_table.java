@@ -39,27 +39,27 @@ public class province_table {
     }
 
     @Column(name = "longitude",  nullable = false)
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
     @Column(name = "latitude",  nullable = false)
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public void setLatitude(String latitude) {
+
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
     private String provinceID;
     private String province;
     private String province_simplify;
-    private String longitude;
-    private String latitude;
-
+    private Double longitude;
+    private Double latitude;
 
 
 }

@@ -3,6 +3,7 @@ package com.zkb.ltk.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.xml.soap.Text;
 
 /**
  * Created by ashley_wsm on 2017/3/1.
@@ -10,14 +11,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "shortest_paths")
 public class shortest_paths {
+
     @Id
     @GenericGenerator(name = "generator", strategy = "assigned")
     @GeneratedValue(generator = "generator")
     @Column(name = "id",  nullable = false)
-    public String getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,10 +40,11 @@ public class shortest_paths {
     }
 
     @Column(name = "length")
-    public String getLength() {
+    public Double getLength() {
         return length;
     }
-    public void setLength(String length) {
+
+    public void setLength(Double length) {
         this.length = length;
     }
 
@@ -53,10 +56,10 @@ public class shortest_paths {
         this.path = path;
     }
 
-    private String id;
+    private Integer id;
     private String origin;
     private String destination;
-    private String length;
+    private Double length;
     private String path;
 
 }
