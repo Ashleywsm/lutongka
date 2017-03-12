@@ -3,7 +3,6 @@ package com.zkb.ltk.dao.impl;
 import com.zkb.ltk.dao.UserDistributeDao;
 import com.zkb.ltk.model.traffic_data;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.HashMap;

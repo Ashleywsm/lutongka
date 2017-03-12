@@ -44,25 +44,25 @@ public class UserDistributeServiceImpl implements UserDistributeService {
                 hashMap.put(province,1);
             }
         }
-        List<HashMap.Entry<String,Integer>> list = new ArrayList<HashMap.Entry<String,Integer>>(hashMap.entrySet());
-        Collections.sort(list, new Comparator<HashMap.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-
-        int i=0;
-        int sum = 0;
-        int top10 = 0;
-        for(HashMap.Entry<String,Integer> mapping: list){
-            i++;
-            String province = mapping.getKey();
-            Integer num = mapping.getValue();
-            if(i<=10){
-                top10+=num;
-            }
-            sum+=num;
-        }
+//        List<HashMap.Entry<String,Integer>> list = new ArrayList<HashMap.Entry<String,Integer>>(hashMap.entrySet());
+//        Collections.sort(list, new Comparator<HashMap.Entry<String, Integer>>() {
+//            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+//                return o2.getValue().compareTo(o1.getValue());
+//            }
+//        });
+//
+//        int i=0;
+//        int sum = 0;
+//        int top10 = 0;
+//        for(HashMap.Entry<String,Integer> mapping: list){
+//            i++;
+//            String province = mapping.getKey();
+//            Integer num = mapping.getValue();
+//            if(i<=10){
+//                top10+=num;
+//            }
+//            sum+=num;
+//        }
 
         return null;
     }
