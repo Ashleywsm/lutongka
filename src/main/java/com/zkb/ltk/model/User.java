@@ -26,7 +26,7 @@ public class User {
         this.user_id =user_id;
     }
 
-    @Column(name="password")
+    @Column(name="password",nullable = false)
     public String getPassword() {
         return password;
     }

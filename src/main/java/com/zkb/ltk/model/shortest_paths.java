@@ -23,7 +23,7 @@ public class shortest_paths {
         this.id = id;
     }
 
-    @Column(name = "origin")
+    @Column(name = "origin",nullable = false)
     public String getOrigin() {
         return origin;
     }
@@ -31,7 +31,7 @@ public class shortest_paths {
         this.origin = origin;
     }
 
-    @Column(name = "destination")
+    @Column(name = "destination",nullable = false)
     public String getDestination() {
         return destination;
     }
