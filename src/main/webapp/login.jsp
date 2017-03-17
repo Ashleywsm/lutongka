@@ -22,7 +22,6 @@
         <input type="text" required="required" placeholder="用户名" id="username"></input>
         <input type="password" required="required" placeholder="密码" id="password"></input>
         <button class="but" type="submit" onclick="login_button()">登录</button>
-        <%--<button class="but" type="submit" onclick="test()">测试</button>--%>
     </form>
 </div>
 
@@ -36,7 +35,7 @@
             function(data){
                 if(data=="success"){
 
-                    window.location.href="${ContextPath}/login/toWorkspace";
+                    window.location.href="${ContextPath}/login/Workspace";
                 }else {
 
                     console.log("error");

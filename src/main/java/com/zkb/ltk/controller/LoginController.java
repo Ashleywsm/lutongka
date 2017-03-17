@@ -52,7 +52,7 @@ public class LoginController {
         }else return "error";
     }
 
-    @RequestMapping("toWorkspace")
+    @RequestMapping("Workspace")
     public ModelAndView toIndex(HttpSession session, HttpServletRequest request){
 
         ModelAndView mv=new ModelAndView("workspace");
