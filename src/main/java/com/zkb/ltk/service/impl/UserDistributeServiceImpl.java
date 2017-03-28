@@ -1,6 +1,6 @@
 package com.zkb.ltk.service.impl;
 
-import com.zkb.ltk.dao.UserDistributeDao;
+import com.zkb.ltk.dao.traffic_dataDao;
 import com.zkb.ltk.model.traffic_data;
 import com.zkb.ltk.service.UserDistributeService;
 import org.springframework.stereotype.Service;
@@ -12,18 +12,19 @@ import java.util.*;
  */
 @Service
 public class UserDistributeServiceImpl implements UserDistributeService {
-    UserDistributeDao userDistributeDao;
+    traffic_dataDao datadao;
 
-    public UserDistributeDao getUserDistributeDao() {
-        return userDistributeDao;
+    public traffic_dataDao getTraffic_datadao() {
+        return datadao;
     }
 
-    public void setUserDistributeDao(UserDistributeDao userDistributeDao) {
-        this.userDistributeDao = userDistributeDao;
+    public void setTraffic_datadao(traffic_dataDao traffic_datadao) {
+        this.datadao = traffic_datadao;
     }
+
     //各省的用户数目
-    public HashMap<String, Integer> getUserNumber(Date dateStart, Date dateEnd){
-        List<traffic_data> traffic_datas = userDistributeDao.getTraffic_dataByDate(dateStart,dateEnd);
+    public HashMap<String, Integer> getUserNumber(String dateStart, String dateEnd){
+        List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
         Iterator<traffic_data> it = traffic_datas.iterator();
         HashMap<String ,Integer> hashMap = new HashMap<String, Integer>();
         HashMap<String ,Integer> proIDMap = new HashMap<String, Integer>();
@@ -79,8 +80,8 @@ public class UserDistributeServiceImpl implements UserDistributeService {
     }
 
     //各省的用户消费次数
-    public HashMap<String,Integer> getUserConsumeNumber(Date dateStart,Date dateEnd){
-        List<traffic_data> traffic_datas = userDistributeDao.getTraffic_dataByDate(dateStart,dateEnd);
+    public HashMap<String,Integer> getUserConsumeNumber(String dateStart,String dateEnd){
+        List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
         Iterator<traffic_data> it = traffic_datas.iterator();
         HashMap<String ,Integer> hashMap = new HashMap<String,Integer>();
         while (it.hasNext()){
@@ -128,8 +129,8 @@ public class UserDistributeServiceImpl implements UserDistributeService {
         return userConsumeNumber;
     }
     //各省的用户消费金额
-    public HashMap<String,Double> getUserConsumeMoney(Date dateStart,Date dateEnd){
-        List<traffic_data> traffic_datas = userDistributeDao.getTraffic_dataByDate(dateStart,dateEnd);
+    public HashMap<String,Double> getUserConsumeMoney(String dateStart,String dateEnd){
+        List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
         Iterator<traffic_data> it = traffic_datas.iterator();
         HashMap<String ,Double> hashMap = new HashMap<String,Double>();
         while (it.hasNext()){

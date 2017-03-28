@@ -4,5 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="testDao" class="com.zkb.ltk.dao.impl.testDaoImpl"></bean>
-    <bean id="loginDao" class="com.zkb.ltk.dao.impl.LoginDaoImpl"></bean>
+    <bean id="comparisonDao" class="com.zkb.ltk.dao.impl.comparisonDaoImpl"></bean>
+    <bean id="pathDao" class="com.zkb.ltk.dao.impl.pathDaoImpl"></bean>
+    <bean id="provinceDao" class="com.zkb.ltk.dao.impl.provinceDaoImpl"></bean>
+    <bean id="roadlinkDao" class="com.zkb.ltk.dao.impl.roadlinkDaoImpl"></bean>
+    <bean id="stationsDao" class="com.zkb.ltk.dao.impl.stationsDaoImpl"></bean>
+    <bean id="traffic_dataDao" class="com.zkb.ltk.dao.impl.traffic_dataDaoImpl"></bean>
+    <bean id="userDao" class="com.zkb.ltk.dao.impl.userDaoImpl"></bean>
 </beans>

@@ -29,6 +29,7 @@ public class traffic_data {
     private String vehiclePlate;
     private String vehicleModel;
     private String province;
+
     @Id
     @GenericGenerator(name = "generator", strategy = "assigned")
     @GeneratedValue(generator = "generator")

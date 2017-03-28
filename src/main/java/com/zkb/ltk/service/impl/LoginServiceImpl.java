@@ -1,9 +1,8 @@
 package com.zkb.ltk.service.impl;
 
-import com.zkb.ltk.dao.LoginDao;
-import com.zkb.ltk.model.User;
+import com.zkb.ltk.dao.userDao;
+import com.zkb.ltk.model.user;
 import com.zkb.ltk.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,24 +10,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LoginServiceImpl implements LoginService{
-    public LoginDao getLoginDao() {
-        return loginDao;
+
+    public userDao getUserdao() {
+        return userdao;
     }
 
-    public void setLoginDao(LoginDao loginDao) {
-        this.loginDao = loginDao;
+    public void setUserdao(userDao userdao) {
+        this.userdao = userdao;
     }
 
-    LoginDao loginDao;
+    userDao userdao;
 
 
-    public User LoginAsUser(String id,String password){
-        System.out.print("23333");
-        User user = loginDao.get(id);
-        if(null!=user&&user.getPassword().equals(password)){
-            return user;
-        }else{
-            return null;
-        }
+    public user LoginAsUser(String id, String password){
+        String pass = userdao.getUserByID(id);
+        System.out.println(pass);
+
+
+        return null;
     }
 }

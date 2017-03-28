@@ -5,7 +5,23 @@
     <bean id="testService" class="com.zkb.ltk.service.impl.testServiceImpl">
         <property name="testDao" ref="testDao"></property>
     </bean>
+    <bean id="highwayLineService" class="com.zkb.ltk.service.impl.HighwayLineServiceImpl">
+        <property name="traffic_datadao" ref="traffic_dataDao"></property>
+        <property name="provincedao" ref="provinceDao"></property>
+        <property name="comparisondao" ref="comparisonDao"></property>
+        <property name="pathdao" ref="pathDao"></property>
+        <property name="roadlinkdao" ref="roadlinkDao"></property>
+    </bean>
     <bean id="loginService" class="com.zkb.ltk.service.impl.LoginServiceImpl">
-        <property name="loginDao" ref="loginDao"></property>
+        <property name="userdao" ref="userDao"></property>
+    </bean>
+    <bean id="odLineServince" class="com.zkb.ltk.service.impl.ODLineServiceImpl">
+        <property name="traffic_datadao" ref="traffic_dataDao"></property>
+        <property name="comparisondao" ref="comparisonDao"></property>
+        <property name="provincedao" ref="provinceDao"></property>
+        <property name="stationdao" ref="stationsDao"></property>
+    </bean>
+    <bean id="userDistributeService" class="com.zkb.ltk.service.impl.UserDistributeServiceImpl">
+        <property name="traffic_datadao" ref="traffic_dataDao"></property>
     </bean>
 </beans>

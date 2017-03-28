@@ -5,4 +5,5 @@ package com.zkb.ltk.service;
  */
 public interface testService {
     String getDataById(String id);
+
 }

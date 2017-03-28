@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class user {
     private String user_id;
     private String password;
 
