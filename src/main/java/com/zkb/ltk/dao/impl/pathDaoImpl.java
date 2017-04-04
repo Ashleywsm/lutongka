@@ -12,11 +12,12 @@ import java.util.List;
 public class pathDaoImpl extends DaoImpl<shortest_paths,String> implements pathDao {
     public HashMap<String,String> getAllPath(){
         HashMap<String,String> shortestPath = new HashMap<String, String>();
-        String sql = "select * from shortest_paths";
-        List<shortest_paths> paths = super.sqlGetList(sql);
+        String hql = "from shortest_paths";
+        List<shortest_paths> paths = super.hqlGetList(hql);
+        System.out.println("paths:"+paths.size());
         for(int i=0;i<paths.size();i++){
             shortest_paths shortpath = paths.get(i);
-            String origin = shortpath.getPath();
+            String origin = shortpath.getOrigin();
             String destination = shortpath.getDestination();
             String path = shortpath.getPath();
             shortestPath.put(origin+"|"+destination,path);

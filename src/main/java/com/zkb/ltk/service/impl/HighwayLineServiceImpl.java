@@ -5,6 +5,7 @@ import com.zkb.ltk.model.traffic_data;
 import com.zkb.ltk.service.HighwayLineService;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -68,7 +69,7 @@ public class HighwayLineServiceImpl implements HighwayLineService{
         HashMap<Integer,HashMap<String,Integer>> odmax = new HashMap<Integer, HashMap<String, Integer>>();
         while (it.hasNext()){
             traffic_data trafficData = it.next();
-            Date intime = trafficData.getInTime();
+            Timestamp intime = trafficData.getInTime();
             String innetID = trafficData.getInNetID();
             String inStationID = trafficData.getInStationID();
             String origin = trafficData.getOrigin();
@@ -77,19 +78,19 @@ public class HighwayLineServiceImpl implements HighwayLineService{
             String outStationID = trafficData.getOutStationID();
             String destination = trafficData.getDestination();
             String poi_out = comparisons.get(proID+"|"+outnetID+"|"+outStationID+"|"+destination+"|出");
-            System.out.println(origin);
-            System.out.println(destination);
-            if(poi_in.equals(null)||poi_out.equals(null)){
+//            System.out.println(origin);
+//            System.out.println(destination);
+            if(poi_in.equals("null")||poi_out.equals("null")){
 
             }else {
                 String path = paths.get(poi_in+"|"+poi_out);
-                if(path.equals(null)){
+                if(path==null){
 
                 }else {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(intime);
                     Integer hour = calendar.get(Calendar.HOUR_OF_DAY);
-                    String[] string_path = path.split("|");
+                    String[] string_path = path.split("\\|");
                     for(int i=0;i<string_path.length-1;i++){
                         String id1 = string_path[i];
                         String id2 = string_path[i+1];

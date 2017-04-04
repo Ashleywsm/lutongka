@@ -17,6 +17,7 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
         List<traffic_data> traffic_datas = null;
         try{
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeWithDetail=new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
             Date date_start = sdf.parse(date);
             Calendar c = Calendar.getInstance();
             c.setTime(date_start);
@@ -24,14 +25,17 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
             Date date_end = c.getTime();
             Timestamp time_start = new Timestamp(date_start.getTime());
             Timestamp time_end = new Timestamp(date_end.getTime());
+            /*String time_start =  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date_start);
+            String time_end =  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date_end);*/
 
-            String sql = "select * from traffic_data where province = ? and inTime >= ? and outTime < ?";
+
+            String hql = "from traffic_data where province = ? and inTime >= ? and outTime < ?";
             Object[] values = new Object[3];
             values[0] = province;
             values[1] = time_start;
             values[2] = time_end;
-            traffic_datas = super.sqlGetList(sql,values);
-
+            traffic_datas = super.hqlGetList(hql,values);
+//            List<traffic_data> alltraffic_datas = super.hqlGetList(hql,values);
 //            for(int i=0;i<alltraffic_datas.size();i++){
 //                traffic_data data = alltraffic_datas.get(i);
 //                String pro = data.getProvince();

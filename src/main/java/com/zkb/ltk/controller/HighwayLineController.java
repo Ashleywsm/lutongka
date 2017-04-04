@@ -21,7 +21,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/login/workspace/highwayline")
 public class HighwayLineController {
-    @Resource(name = "highwayLineService")
+    @Resource(name="highwayLineService")
     HighwayLineService highwayLineService;
 
     @RequestMapping("/two")
@@ -32,23 +32,32 @@ public class HighwayLineController {
         String province = request.getParameter("province");
         HashMap<Integer,HashMap<String,Integer>> odmax = new HashMap<Integer, HashMap<String, Integer>>();
         odmax = highwayLineService.getHighwayLine(province,date);
-        String od = "[";
+        StringBuffer buffer = new StringBuffer("[\r\n");
+//        String od = "[";
 
         for(Integer key:odmax.keySet()){
             HashMap<String,Integer> roadnumber = odmax.get(key);
-            od += "[";
+            buffer.append("[\r\n");
+            //buffer.append("[");
+            //od += "[";
             for(String link:roadnumber.keySet()){
                 Integer num = roadnumber.get(link);
                 String number = String.valueOf(num);
                 String poi1 = link.substring(0,link.indexOf("|"));
                 String poi2 = link.substring(link.indexOf("|")+1);
-                od += "{o:"+poi1+",d:"+poi2+",flow:"+number+"},";
+                buffer.append("{o:"+poi1+",d:"+poi2+",flow:"+number+"},\r\n");
+                //buffer.append("{o:"+poi1+",d:"+poi2+",flow:"+number+"},");
+                //od += "{o:"+poi1+",d:"+poi2+",flow:"+number+"},";
             }
-            od +="],";
+            buffer.append("],\r\n");
+            //buffer.append("],");
+           // od +="],";
         }
-        od += "]";
-        System.out.print(od);
-        return od;
+        //buffer.append("]");
+        buffer.append("]\r\n");
+        //od += "]";//
+        //System.out.print(od);
+        return buffer.toString();
 
     }
 

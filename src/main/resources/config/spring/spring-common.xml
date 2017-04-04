@@ -20,7 +20,7 @@
             <value>com.mysql.jdbc.Driver</value>
         </property>
         <property name="url">
-            <value>jdbc:mysql://127.0.0.1:3306/shandong</value><!-- 数据库 -->
+            <value>jdbc:mysql://localhost:3306/shandong</value><!-- 数据库 -->
         </property>
 
         <property name="username" value="root"/>

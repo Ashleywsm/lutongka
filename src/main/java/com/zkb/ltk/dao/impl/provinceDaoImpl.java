@@ -15,11 +15,6 @@ public class provinceDaoImpl extends DaoImpl<province_table,String> implements p
         Object[] values = new Object[1];
         values[0] = province;
         List<province_table> provinces = super.hqlGetList(hql,values);
-        if(provinces==null){
-            System.out.println("blabla error");
-        }else {
-            System.out.println("yes");
-        }
         if(provinces.size() == 1){
             id = provinces.get(0).getProvinceID();
         }

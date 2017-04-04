@@ -11,19 +11,20 @@ import java.util.List;
  */
 public class comparisonDaoImpl extends DaoImpl<comparison,String> implements comparisonDao {
     public HashMap<String,String> getComparisonByprovinceid(String provinceid){
-        HashMap<String,String> comprsion_map = new HashMap<String, String>();
-        String sql = "select * from comparison where provinceID = ?";
+        HashMap<String,String> comparison_map = new HashMap<String, String>();
+        String hql = "from comparison where provinceID = ?";
         Object[] values = new Object[1];
         values[0] = provinceid;
-        List<comparison> comparisons = super.sqlGetList(sql,values);
+        List<comparison> comparisons = super.hqlGetList(hql,values);
+        System.out.println("comparison:"+comparisons.size());
         for(int i=0;i<comparisons.size();i++){
             comparison table = comparisons.get(i);
             String id = table.getId();
-            String station = table.getStation();
-            String type = table.getStationType();
+//            String station = table.getStation();
+//            String type = table.getStationType();
             String poi_id = table.getPoi_id();
-            comprsion_map.put(id+"|"+station+"|"+type,poi_id);
+            comparison_map.put(id,poi_id);
         }
-        return comprsion_map;
+        return comparison_map;
     }
 }

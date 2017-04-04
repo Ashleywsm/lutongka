@@ -24,6 +24,7 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=t65FFKL6S3wBE51a06KGMyEm"></script>
 <script src="js/echarts.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src = "json/lulian.json"></script>
 <style type="text/css"> @import "css/workspace.css";</style>
 
     <nav class="navbar navbar-fixed-top" role="navigation" id="nav1">
@@ -32,12 +33,13 @@
                 <a class="navbar-brand" href="#" id="Title1">鲁通卡用户分析系统</a>
             </div>
             <div>
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
+                <%--<form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">--%>
                         <input type="date"class="form-control" id="date"/>
                         <input type="text" class="form-control" id="province"/>
-                    </div>
-                    <button type="submit" onclick="submit_button()">提交</button>
+                    <%--</div>--%>
+                    <%--<button type="submit" onclick="submit_button()">提交</button>--%>
+                    <button id="zkbzkbzkb" onclick="submit_button()">提交</button>
                 </form>
             </div>
         </div>
@@ -62,36 +64,29 @@
 </body>
 <script type="text/javascript">
     var odmax0;
-    var zones;
     function submit_button(){
-        $.post(
-            "${ContextPath}/login/workspace/highwayline/two",
-            {
+
+
+
+        $.ajax({
+            type : "POST",  //提交方式
+            url : "${ContextPath}/login/workspace/highwayline/two",//路径
+            async:"false",
+            dataType:"text",
+            data : {
                 "date":$('#date').val(),
                 "province":$('#province').val()
-            },
-                function(data){
-                if(data=="error"){
-                    console.log("error");
-                }else{
-                    odmax0 = data;
-                }
-                }
-        );
-        $.post(
-            "${ContextPath}/login/workspace/highwayline/one",
-            {
-                "province":$('#province').val()
-            },
-            function (data) {
-                zones = data;
+            },//数据，这里使用的是Json格式进行传输
+            success : function(result) {//返回数据根据结果进行相应的处理
+                odmax0=result;
+                dealTheMap();
             }
-        )
+        });
      }
 
-    (function(){
-
-        var lines0 = odmax0.map(function(o){
+    function dealTheMap(){
+        var zzz = eval('(' + odmax0 + ')');
+        var lines0 = zzz.map(function(o){
             return o.map(function(p){
                 return [{ name : p.o},{ name : p.d , value : p.flow}];
             });
@@ -407,7 +402,7 @@
                 var ecConfig = require('echarts/config');
 
             });
-    })();
+    };
 
 
 
