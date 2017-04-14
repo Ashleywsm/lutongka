@@ -33,14 +33,13 @@
                 <a class="navbar-brand" href="#" id="Title1">鲁通卡用户分析系统</a>
             </div>
             <div>
-                <%--<form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">--%>
+                <form id="myform">
+                    <div class="form-group">
                         <input type="date"class="form-control" id="date"/>
                         <input type="text" class="form-control" id="province"/>
-                    <%--</div>--%>
-                    <%--<button type="submit" onclick="submit_button()">提交</button>--%>
-                    <button id="zkbzkbzkb" onclick="submit_button()">提交</button>
+                    </div>
                 </form>
+                <button id="zkbzkbzkb" type = "button" onclick="submit_button()">提交</button>
             </div>
         </div>
 
@@ -64,10 +63,8 @@
 </body>
 <script type="text/javascript">
     var odmax0;
+    var zones;
     function submit_button(){
-
-
-
         $.ajax({
             type : "POST",  //提交方式
             url : "${ContextPath}/login/workspace/highwayline/two",//路径
@@ -78,23 +75,34 @@
                 "province":$('#province').val()
             },//数据，这里使用的是Json格式进行传输
             success : function(result) {//返回数据根据结果进行相应的处理
-                odmax0=result;
+                odmax0=eval('('+result+')');
+//                zones = eval('('+result+')');
                 dealTheMap();
             }
         });
-     }
-
+        <%--$.ajax({--%>
+            <%--type : "POST",  //提交方式--%>
+            <%--url : "${ContextPath}/login/workspace/highwayline/one",//路径--%>
+            <%--async:"false",--%>
+            <%--dataType:"text",--%>
+            <%--data : {--%>
+                <%--"province":$('#province').val()--%>
+            <%--},//数据，这里使用的是Json格式进行传输--%>
+            <%--success : function(result) {//返回数据根据结果进行相应的处理--%>
+                <%--zones=result;--%>
+            <%--}--%>
+        <%--});--%>
+    }
     function dealTheMap(){
-        var zzz = eval('(' + odmax0 + ')');
-        var lines0 = zzz.map(function(o){
+        var lines0 = odmax0.map(function(o){
             return o.map(function(p){
                 return [{ name : p.o},{ name : p.d , value : p.flow}];
             });
         });
 
-
+//        var zone = eval('('+zones+')');
         var geodata = {};
-        zones.forEach(function(o){
+        zone.forEach(function(o){
             _name = o.name;
             _centerX = o.centerX;
             _centerY = o.centerY;
@@ -307,16 +315,6 @@
                                 trigger: 'item',
                                 formatter: '{b}'
                             },
-//                            legend: {
-//                                orient: 'vertical',
-//                                x:'left',
-//                                data:['当天'],
-//                                selectedMode: 'single',
-//                                textStyle : {
-//                                    color: '#fff',
-//                                    "fontSize": 20
-//                                }
-//                            },
                             toolbox: {
                                 show : true,
                                 orient : 'vertical',
@@ -331,11 +329,11 @@
                             },
                             dataRange: {
                                 min : 1,
-                                max : 70,
+                                max : 3000,
                                 calculable : true,
                                 x: 'right',
                                 y: document.body.clientHeight-250,
-                                color: ['#2e30de','#12d6f2'],
+                                color: ['#12d6f2','#00a9e9','#2e30de','#601986'],
                                 textStyle:{
                                     color:'#fff'
                                 }

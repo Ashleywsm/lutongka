@@ -23,8 +23,8 @@ public class traffic_data {
     private String outNetID;
     private String outStationID;
     private String destination;
-    private Double weight;
-    private Double overlimit;
+    private String weight;
+    private String overlimit;
     private String plateColor;
     private String vehiclePlate;
     private String vehicleModel;
@@ -133,20 +133,20 @@ public class traffic_data {
     }
 
     @Column(name = "weight")
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
     @Column(name = "overlimit")
-    public Double getOverlimit() {
+    public String getOverlimit() {
         return overlimit;
     }
 
-    public void setOverlimit(Double overlimit) {
+    public void setOverlimit(String overlimit) {
         this.overlimit = overlimit;
     }
 

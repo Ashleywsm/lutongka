@@ -21,7 +21,20 @@ public class roadlinkDaoImpl extends DaoImpl<roadlink,String> implements roadlin
             String id = lulian.getId();
             Double lng = lulian.getLongitude();
             Double lat = lulian.getLatitude();
-            String center = String.valueOf(lng)+"|"+String.valueOf(lat);
+            //gcj转换百度
+            Double temp;
+            if(lng<lat){
+                temp = lng;
+                lng = lat;
+                lat = lng;
+            }
+            Double x = lng,y = lat;
+            Double z = Math.sqrt(x*x+y*y)+0.00002*Math.sin(y*Math.PI*3000.0/180.0);
+            Double theta = Math.atan2(y, x)+0.000003*Math.cos(x*Math.PI*3000.0/180.0);
+            Double bd_lng = z*Math.cos(theta)+0.0065;
+            Double bd_lat = z*Math.sin(theta)+0.006;
+
+            String center = String.valueOf(bd_lng)+"|"+String.valueOf(bd_lat);
             hashMap.put(id,center);
         }
         return hashMap;

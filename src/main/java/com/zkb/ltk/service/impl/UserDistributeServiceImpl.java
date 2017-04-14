@@ -14,168 +14,188 @@ import java.util.*;
 public class UserDistributeServiceImpl implements UserDistributeService {
     traffic_dataDao datadao;
 
-    public traffic_dataDao getTraffic_datadao() {
-        return datadao;
-    }
+    public traffic_dataDao getTraffic_datadao() {return datadao;}
 
     public void setTraffic_datadao(traffic_dataDao traffic_datadao) {
         this.datadao = traffic_datadao;
     }
 
-    //各省的用户数目
-    public HashMap<String, Integer> getUserNumber(String dateStart, String dateEnd){
+    public String getUser(String[] array,String dateStart, String dateEnd){
         List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
+
         Iterator<traffic_data> it = traffic_datas.iterator();
-        HashMap<String ,Integer> hashMap = new HashMap<String, Integer>();
-        HashMap<String ,Integer> proIDMap = new HashMap<String, Integer>();
+        HashMap<String ,Integer> AlluserNumber = new HashMap<String, Integer>();
+        HashMap<String ,Integer> proIDMap = new HashMap<String, Integer>();//pro+paycard
+        HashMap<String ,Integer> AllconsumeNumber = new HashMap<String,Integer>();
+        HashMap<String ,Double> AllconsumeMoney = new HashMap<String,Double>();
         while(it.hasNext()){
             traffic_data trafficData = it.next();
             String paycard = trafficData.getPaycard();
             String province = trafficData.getProvince();
-            if(hashMap.containsKey(province)){
+            Double consume = trafficData.getLastMoney();
+            //用户数统计
+            if(AlluserNumber.containsKey(province)){
                 if(proIDMap.containsKey(province+paycard)){
 
                 }else {
                     proIDMap.put(province+paycard,1);
-                    Integer number = hashMap.get(province);
+                    Integer number = AlluserNumber.get(province);
                     number++;
-                    hashMap.put(province,number);
+                    AlluserNumber.put(province,number);
                 }
             }else {
-                hashMap.put(province,1);
+                AlluserNumber.put(province,1);
             }
-        }
-        int sum =0;
-
-        for(String key:hashMap.keySet()){
-            Integer val = hashMap.get(key);
-            sum = sum + val;
-        }
-
-        HashMap<String ,Integer> userNumber = new HashMap<String, Integer>();
-        String string1 = "山东省"; Integer integer1 = hashMap.get(string1);
-        String string2 = "江苏省";Integer integer2 = hashMap.get(string2);
-        String string3 = "广东省";Integer integer3 = hashMap.get(string3);
-        String string4 = "河北省";Integer integer4 = hashMap.get(string4);
-        String string5 = "浙江省";Integer integer5 = hashMap.get(string5);
-        String string6 = "北京市";Integer integer6 = hashMap.get(string6);
-        String string7 = "上海市";Integer integer7 = hashMap.get(string7);
-        String string8 = "天津市";Integer integer8 = hashMap.get(string8);
-        String string9 = "安徽省";Integer integer9 = hashMap.get(string9);
-        String string10 = "湖北省";Integer integer10 = hashMap.get(string10);
-        String string11 = "其他省";Integer integer11 = sum -integer1-integer2-integer3-integer4-integer5-integer6-integer7-integer8-integer9-integer10;
-        userNumber.put(string1,integer1);
-        userNumber.put(string2,integer2);
-        userNumber.put(string3,integer3);
-        userNumber.put(string4,integer4);
-        userNumber.put(string5,integer5);
-        userNumber.put(string6,integer6);
-        userNumber.put(string7,integer7);
-        userNumber.put(string8,integer8);
-        userNumber.put(string9,integer9);
-        userNumber.put(string10,integer10);
-        userNumber.put(string11,integer11);
-
-        return userNumber;
-    }
-
-    //各省的用户消费次数
-    public HashMap<String,Integer> getUserConsumeNumber(String dateStart,String dateEnd){
-        List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
-        Iterator<traffic_data> it = traffic_datas.iterator();
-        HashMap<String ,Integer> hashMap = new HashMap<String,Integer>();
-        while (it.hasNext()){
-            traffic_data trafficData = it.next();
-            String province = trafficData.getProvince();
-
-            if(hashMap.containsKey(province)){
-                Integer number = hashMap.get(province);
-                hashMap.put(province,number);
+            //用户消费次数统计
+            if(AllconsumeNumber.containsKey(province)){
+                Integer number = AllconsumeNumber.get(province);
+                AllconsumeNumber.put(province,number);
             }else{
-                hashMap.put(province,1);
+                AllconsumeNumber.put(province,1);
             }
-        }
-        int sum =0;
-
-        for(String key:hashMap.keySet()){
-            Integer val = hashMap.get(key);
-            sum = sum + val;
-        }
-
-        HashMap<String ,Integer> userConsumeNumber = new HashMap<String, Integer>();
-        String string1 = "山东省";Integer integer1 = hashMap.get(string1);
-        String string2 = "江苏省";Integer integer2 = hashMap.get(string2);
-        String string3 = "广东省";Integer integer3 = hashMap.get(string3);
-        String string4 = "河北省";Integer integer4 = hashMap.get(string4);
-        String string5 = "浙江省";Integer integer5 = hashMap.get(string5);
-        String string6 = "北京市";Integer integer6 = hashMap.get(string6);
-        String string7 = "上海市";Integer integer7 = hashMap.get(string7);
-        String string8 = "天津市";Integer integer8 = hashMap.get(string8);
-        String string9 = "安徽省";Integer integer9 = hashMap.get(string9);
-        String string10 = "湖北省";Integer integer10 = hashMap.get(string10);
-        String string11 = "其他省";Integer integer11 = sum -integer1-integer2-integer3-integer4-integer5-integer6-integer7-integer8-integer9-integer10;
-        userConsumeNumber.put(string1,integer1);
-        userConsumeNumber.put(string2,integer2);
-        userConsumeNumber.put(string3,integer3);
-        userConsumeNumber.put(string4,integer4);
-        userConsumeNumber.put(string5,integer5);
-        userConsumeNumber.put(string6,integer6);
-        userConsumeNumber.put(string7,integer7);
-        userConsumeNumber.put(string8,integer8);
-        userConsumeNumber.put(string9,integer9);
-        userConsumeNumber.put(string10,integer10);
-        userConsumeNumber.put(string11,integer11);
-
-        return userConsumeNumber;
-    }
-    //各省的用户消费金额
-    public HashMap<String,Double> getUserConsumeMoney(String dateStart,String dateEnd){
-        List<traffic_data> traffic_datas = datadao.getDataByStartEnd(dateStart,dateEnd);
-        Iterator<traffic_data> it = traffic_datas.iterator();
-        HashMap<String ,Double> hashMap = new HashMap<String,Double>();
-        while (it.hasNext()){
-            traffic_data trafficData = it.next();
-            String province = trafficData.getProvince();
-            Double consume = trafficData.getLastMoney();
-            if(hashMap.containsKey(province)){
-                Double consumes = hashMap.get(province);
+            //用户消费金额统计
+            if(AllconsumeMoney.containsKey(province)){
+                Double consumes = AllconsumeMoney.get(province);
                 consumes = consumes +consume;
-                hashMap.put(province,consumes);
+                AllconsumeMoney.put(province,consumes);
             }else{
-                hashMap.put(province,consume);
+                AllconsumeMoney.put(province,consume);
             }
+
         }
 
-        Double sum = 0.0;
-        for(String key:hashMap.keySet()){
-            Double consume = hashMap.get(key);
-            sum = sum+consume;
+        //计算10个省份用户数
+        int sum_usernumber =0;
+        for(String key:AlluserNumber.keySet()){
+            Integer val = AlluserNumber.get(key);
+            sum_usernumber = sum_usernumber + val;
+        }
+        HashMap<String ,Integer> userNumber = new HashMap<String, Integer>();
+        Integer integer1 = AlluserNumber.get(array[0]);
+        Integer integer2 = AlluserNumber.get(array[1]);
+        Integer integer3 = AlluserNumber.get(array[2]);
+        Integer integer4 = AlluserNumber.get(array[3]);
+        Integer integer5 = AlluserNumber.get(array[4]);
+        Integer integer6 = AlluserNumber.get(array[5]);
+        Integer integer7 = AlluserNumber.get(array[6]);
+        Integer integer8 = AlluserNumber.get(array[7]);
+        Integer integer9 = AlluserNumber.get(array[8]);
+        Integer integer10 = AlluserNumber.get(array[9]);
+        Integer integer11 = sum_usernumber -integer1-integer2-integer3-integer4-integer5-integer6-integer7-integer8-integer9-integer10;
+        userNumber.put(array[0],integer1);
+        userNumber.put(array[1],integer2);
+        userNumber.put(array[2],integer3);
+        userNumber.put(array[3],integer4);
+        userNumber.put(array[4],integer5);
+        userNumber.put(array[5],integer6);
+        userNumber.put(array[6],integer7);
+        userNumber.put(array[7],integer8);
+        userNumber.put(array[8],integer9);
+        userNumber.put(array[9],integer10);
+        userNumber.put(array[10],integer11);
+        //计算10个省用户消费次数
+        int sum_consumenumber =0;
+        for(String key:AllconsumeNumber.keySet()){
+            Integer val = AllconsumeNumber.get(key);
+            sum_consumenumber = sum_consumenumber + val;
+        }
+        HashMap<String ,Integer> userConsumeNumber = new HashMap<String, Integer>();
+        Integer int1 = AllconsumeNumber.get(array[0]);
+        Integer int2 = AllconsumeNumber.get(array[1]);
+        Integer int3 = AllconsumeNumber.get(array[2]);
+        Integer int4 = AllconsumeNumber.get(array[3]);
+        Integer int5 = AllconsumeNumber.get(array[4]);
+        Integer int6 = AllconsumeNumber.get(array[5]);
+        Integer int7 = AllconsumeNumber.get(array[6]);
+        Integer int8 = AllconsumeNumber.get(array[7]);
+        Integer int9 = AllconsumeNumber.get(array[8]);
+        Integer int10 = AllconsumeNumber.get(array[9]);
+        Integer int11 = sum_consumenumber -integer1-integer2-integer3-integer4-integer5-integer6-integer7-integer8-integer9-integer10;
+        userConsumeNumber.put(array[0],int1);
+        userConsumeNumber.put(array[1],int2);
+        userConsumeNumber.put(array[2],int3);
+        userConsumeNumber.put(array[3],int4);
+        userConsumeNumber.put(array[4],int5);
+        userConsumeNumber.put(array[5],int6);
+        userConsumeNumber.put(array[6],int7);
+        userConsumeNumber.put(array[7],int8);
+        userConsumeNumber.put(array[8],int9);
+        userConsumeNumber.put(array[9],int10);
+        userConsumeNumber.put(array[10],int11);
+        //计算10个省用户消费金额
+        Double sum_cocnsumemoney = 0.0;
+        for(String key:AllconsumeMoney.keySet()){
+            Double consume = AllconsumeMoney.get(key);
+            sum_cocnsumemoney = sum_cocnsumemoney+consume;
         }
         HashMap<String ,Double> userConsumeMoney = new HashMap<String, Double>();
-        String string1 = "山东省";Double consume1 = hashMap.get(string1);
-        String string2 = "江苏省";Double consume2 = hashMap.get(string2);
-        String string3 = "广东省";Double consume3 = hashMap.get(string3);
-        String string4 = "河北省";Double consume4 = hashMap.get(string4);
-        String string5 = "浙江省";Double consume5 = hashMap.get(string5);
-        String string6 = "北京市";Double consume6 = hashMap.get(string6);
-        String string7 = "上海市";Double consume7 = hashMap.get(string7);
-        String string8 = "天津市";Double consume8 = hashMap.get(string8);
-        String string9 = "安徽省";Double consume9 = hashMap.get(string9);
-        String string10 = "湖北省";Double consume10 = hashMap.get(string10);
-        String string11 = "其他省";Double consume11 = hashMap.get(string11);
-        userConsumeMoney.put(string1,consume1);
-        userConsumeMoney.put(string2,consume2);
-        userConsumeMoney.put(string3,consume3);
-        userConsumeMoney.put(string4,consume4);
-        userConsumeMoney.put(string5,consume5);
-        userConsumeMoney.put(string6,consume6);
-        userConsumeMoney.put(string7,consume7);
-        userConsumeMoney.put(string8,consume8);
-        userConsumeMoney.put(string9,consume9);
-        userConsumeMoney.put(string10,consume10);
-        userConsumeMoney.put(string11,consume11);
+        Double consume1 = AllconsumeMoney.get(array[0])/10000;
+        Double consume2 = AllconsumeMoney.get(array[1])/10000;
+        Double consume3 = AllconsumeMoney.get(array[2])/10000;
+        Double consume4 = AllconsumeMoney.get(array[3])/10000;
+        Double consume5 = AllconsumeMoney.get(array[4])/10000;
+        Double consume6 = AllconsumeMoney.get(array[5])/10000;
+        Double consume7 = AllconsumeMoney.get(array[6])/10000;
+        Double consume8 = AllconsumeMoney.get(array[7])/10000;
+        Double consume9 = AllconsumeMoney.get(array[8])/10000;
+        Double consume10 = AllconsumeMoney.get(array[9])/10000;
+        Double consume11 = sum_cocnsumemoney/10000-consume1-consume2-consume3-consume4-consume5-consume6-consume7-consume8-consume9-consume10;
+        userConsumeMoney.put(array[0],consume1);
+        userConsumeMoney.put(array[1],consume2);
+        userConsumeMoney.put(array[2],consume3);
+        userConsumeMoney.put(array[3],consume4);
+        userConsumeMoney.put(array[4],consume5);
+        userConsumeMoney.put(array[5],consume6);
+        userConsumeMoney.put(array[6],consume7);
+        userConsumeMoney.put(array[7],consume8);
+        userConsumeMoney.put(array[8],consume9);
+        userConsumeMoney.put(array[9],consume10);
+        userConsumeMoney.put(array[10],consume11);
 
-        return  userConsumeMoney;
+        Double max =0.0;
+        StringBuffer buffer = new StringBuffer();
+        for(String pro:userNumber.keySet()){
+            Integer number = userNumber.get(pro);
+            if(number>max)
+                max = Double.valueOf(number);
+        }
+        for(String pro:userConsumeNumber.keySet()){
+            Integer number = userConsumeNumber.get(pro);
+            if(number>max)
+                max = Double.valueOf(number);
+        }
+        for(String pro:userConsumeMoney.keySet()){
+            Double money = userConsumeMoney.get(pro);
+            if(money>max)
+                max = money;
+        }
+        buffer.append("[{name:\'"+array[0]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[1]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[2]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[3]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[4]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[5]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[6]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[7]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[8]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[9]+"\',max:"+max+"},");
+        buffer.append("{name:\'"+array[10]+"\',max:"+max+"},],");
+
+        buffer.append("["+userNumber.get(array[0])+","+userNumber.get(array[1])+","+userNumber.get(array[2])+","+userNumber.get(array[3])+","+
+                userNumber.get(array[4])+","+userNumber.get(array[5])+","+userNumber.get(array[6])+","+userNumber.get(array[7])+","+
+                userNumber.get(array[8])+","+userNumber.get(array[9])+","+userNumber.get(array[10])+"],");
+
+        buffer.append("["+userConsumeNumber.get(array[0])+","+userConsumeNumber.get(array[1])+","+userConsumeNumber.get(array[2])+","+userConsumeNumber.get(array[3])+","
+                +userConsumeNumber.get(array[4])+","+userConsumeNumber.get(array[5])+","+userConsumeNumber.get(array[6])+","+userConsumeNumber.get(array[7])+","
+                +userConsumeNumber.get(array[8])+","+userConsumeNumber.get(array[9])+","+userConsumeNumber.get(array[10])+"],");
+
+        buffer.append("["+userConsumeMoney.get(array[0])+","+userConsumeMoney.get(array[1])+","+userConsumeMoney.get(array[2])+","+userConsumeMoney.get(array[3])+","
+                +userConsumeMoney.get(array[4])+","+userConsumeMoney.get(array[5])+","+userConsumeMoney.get(array[6])+","+userConsumeMoney.get(array[7])+","
+                +userConsumeMoney.get(array[8])+","+userConsumeMoney.get(array[9])+","+userConsumeMoney.get(array[10])+"],");
+
+
+
+        return buffer.toString();
     }
 
 

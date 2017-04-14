@@ -17,7 +17,7 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
         List<traffic_data> traffic_datas = null;
         try{
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat timeWithDetail=new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
+//            SimpleDateFormat timeWithDetail=new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
             Date date_start = sdf.parse(date);
             Calendar c = Calendar.getInstance();
             c.setTime(date_start);
@@ -25,9 +25,6 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
             Date date_end = c.getTime();
             Timestamp time_start = new Timestamp(date_start.getTime());
             Timestamp time_end = new Timestamp(date_end.getTime());
-            /*String time_start =  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date_start);
-            String time_end =  new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date_end);*/
-
 
             String hql = "from traffic_data where province = ? and inTime >= ? and outTime < ?";
             Object[] values = new Object[3];
@@ -35,16 +32,6 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
             values[1] = time_start;
             values[2] = time_end;
             traffic_datas = super.hqlGetList(hql,values);
-//            List<traffic_data> alltraffic_datas = super.hqlGetList(hql,values);
-//            for(int i=0;i<alltraffic_datas.size();i++){
-//                traffic_data data = alltraffic_datas.get(i);
-//                String pro = data.getProvince();
-//                Timestamp t1 = data.getInTime();
-//                Timestamp t2 = data.getOutTime();
-//                if(t1.getTime()>=time_start.getTime()&&t2.getTime()<=time_end.getTime()){
-//                    traffic_datas.add(data);
-//                }
-//            }
 
         }catch (ParseException e){
             e.printStackTrace();
@@ -68,6 +55,7 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
             values[0] = time_start;
             values[1] = time_end;
             traffic_datas = super.sqlGetList(sql,values);
+
         }catch (ParseException e){
             e.printStackTrace();
         }
@@ -102,6 +90,6 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
         Object[] values = new Object[1];
         values[0] = province;
         List<traffic_data> traffic_datas = super.sqlGetList(sql,values);
-        return null;
+        return traffic_datas;
     }
 }

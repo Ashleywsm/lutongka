@@ -9,4 +9,5 @@ import java.util.HashMap;
  */
 public interface pathDao extends Dao<shortest_paths,String> {
     HashMap<String,String> getAllPath();
+    HashMap<String,String> getPathByProvinceID(String province);
 }

@@ -9,4 +9,7 @@ import java.util.HashMap;
  */
 public interface stationsDao extends Dao<stations,String> {
     HashMap<String,String> getStationLngLatByProvince(String province);
+    HashMap<String,String> getPOIStationLngLatByProvince(String province);
+    HashMap<String,String> getStationLngLat();
+    HashMap<String,String> getStationNameByProvince(String province);
 }

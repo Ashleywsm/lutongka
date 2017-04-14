@@ -16,35 +16,18 @@ public class shortest_paths {
     @GenericGenerator(name = "generator", strategy = "assigned")
     @GeneratedValue(generator = "generator")
     @Column(name = "id",  nullable = false)
-    public Integer getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    @Column(name = "origin",nullable = false)
-    public String getOrigin() {
-        return origin;
-    }
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    @Column(name = "destination",nullable = false)
-    public String getDestination() {
-        return destination;
-    }
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
     @Column(name = "length")
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
-
-    public void setLength(Double length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
@@ -56,10 +39,17 @@ public class shortest_paths {
         this.path = path;
     }
 
-    private Integer id;
-    private String origin;
-    private String destination;
-    private Double length;
+    @Column(name = "province")
+    public String getProvince() {
+        return province;
+    }
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    private String id;
+    private String length;
     private String path;
+    private String province;
 
 }

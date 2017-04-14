@@ -28,35 +28,23 @@ public class HighwayLineController {
     @ResponseBody
     public String getHighwayLine(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String date = request.getParameter("date");
-//        String date_end = request.getParameter("date_end");
         String province = request.getParameter("province");
         HashMap<Integer,HashMap<String,Integer>> odmax = new HashMap<Integer, HashMap<String, Integer>>();
         odmax = highwayLineService.getHighwayLine(province,date);
         StringBuffer buffer = new StringBuffer("[\r\n");
-//        String od = "[";
-
         for(Integer key:odmax.keySet()){
             HashMap<String,Integer> roadnumber = odmax.get(key);
             buffer.append("[\r\n");
-            //buffer.append("[");
-            //od += "[";
             for(String link:roadnumber.keySet()){
                 Integer num = roadnumber.get(link);
                 String number = String.valueOf(num);
                 String poi1 = link.substring(0,link.indexOf("|"));
                 String poi2 = link.substring(link.indexOf("|")+1);
                 buffer.append("{o:"+poi1+",d:"+poi2+",flow:"+number+"},\r\n");
-                //buffer.append("{o:"+poi1+",d:"+poi2+",flow:"+number+"},");
-                //od += "{o:"+poi1+",d:"+poi2+",flow:"+number+"},";
             }
             buffer.append("],\r\n");
-            //buffer.append("],");
-           // od +="],";
         }
-        //buffer.append("]");
         buffer.append("]\r\n");
-        //od += "]";//
-        //System.out.print(od);
         return buffer.toString();
 
     }
@@ -66,14 +54,14 @@ public class HighwayLineController {
     public String getLulian(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String province = request.getParameter("province");
         HashMap<String,String> lulian = highwayLineService.getLulianLngLat(province);
-        String zones = "[";
+        StringBuffer buffer = new StringBuffer("[\r\n");
         for(String key:lulian.keySet()){
             String s = lulian.get(key);
             String lng = s.substring(0,s.indexOf("|"));
             String lat = s.substring(s.indexOf("|")+1);
-            zones += "{id:"+key+",name:\""+key+"\",centerX:"+lng+",centerY:"+lat+"},";
+            buffer.append("{id:"+key+",name:\""+key+"\",centerX:"+lng+",centerY:"+lat+"},\r\n");
         }
-        zones += "]";
-        return zones;
+        buffer.append("]\r\n");
+        return buffer.toString();
     }
 }

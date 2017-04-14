@@ -15,7 +15,7 @@
     <bean id="loginService" class="com.zkb.ltk.service.impl.LoginServiceImpl">
         <property name="userdao" ref="userDao"></property>
     </bean>
-    <bean id="odLineServince" class="com.zkb.ltk.service.impl.ODLineServiceImpl">
+    <bean id="odLineService" class="com.zkb.ltk.service.impl.ODLineServiceImpl">
         <property name="traffic_datadao" ref="traffic_dataDao"></property>
         <property name="comparisondao" ref="comparisonDao"></property>
         <property name="provincedao" ref="provinceDao"></property>

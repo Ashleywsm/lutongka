@@ -63,7 +63,7 @@ public class HighwayLineServiceImpl implements HighwayLineService{
         String proID = provincedao.getprovinceidByProvince(province);
         List<traffic_data> traffic_datas = traffic_datadao.getDataByProvinceDate(province,date);
         HashMap<String,String> comparisons = comparisondao.getComparisonByprovinceid(proID);
-        HashMap<String,String> paths = pathdao.getAllPath();
+        HashMap<String,String> paths = pathdao.getPathByProvinceID(proID);
 
         Iterator<traffic_data> it = traffic_datas.iterator();
         HashMap<Integer,HashMap<String,Integer>> odmax = new HashMap<Integer, HashMap<String, Integer>>();
@@ -78,8 +78,6 @@ public class HighwayLineServiceImpl implements HighwayLineService{
             String outStationID = trafficData.getOutStationID();
             String destination = trafficData.getDestination();
             String poi_out = comparisons.get(proID+"|"+outnetID+"|"+outStationID+"|"+destination+"|出");
-//            System.out.println(origin);
-//            System.out.println(destination);
             if(poi_in.equals("null")||poi_out.equals("null")){
 
             }else {
