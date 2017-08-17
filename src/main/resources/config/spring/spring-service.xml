@@ -24,4 +24,7 @@
     <bean id="userDistributeService" class="com.zkb.ltk.service.impl.UserDistributeServiceImpl">
         <property name="traffic_datadao" ref="traffic_dataDao"></property>
     </bean>
+    <bean id="importService" class="com.zkb.ltk.service.impl.ImportServiceImpl">
+        <property name="traffic_datadao" ref="traffic_dataDao"></property>
+    </bean>
 </beans>

@@ -7,7 +7,6 @@ import com.zkb.ltk.dao.traffic_dataDao;
 import com.zkb.ltk.model.traffic_data;
 import com.zkb.ltk.service.ODLineService;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ODLineServiceImpl implements ODLineService{
 
     public String getODLine(String province,String date){
         String proID = provincedao.getprovinceidByProvince(province);
-        List<traffic_data> traffic_datas = traffic_datadao.getDataByProvinceDate(province,date);
+        List<traffic_data> traffic_datas = traffic_datadao.getThirtyDataByProvinceDate(province,date);
         HashMap<String,String> comparisons = comparisondao.getComparisonByprovinceid(proID);
         HashMap<String,String> stationname_map = stationdao.getStationNameByProvince(province);
         Iterator<traffic_data> it = traffic_datas.iterator();
@@ -70,7 +69,7 @@ public class ODLineServiceImpl implements ODLineService{
             String destination = trafficData.getDestination();
             String poi_out = comparisons.get(proID+"|"+outnetID+"|"+outStationID+"|"+destination+"|出");
             String outStation = stationname_map.get(poi_out);
-            if(poi_in.equals("null")||poi_out.equals("null")){
+            if(poi_in==null||poi_out==null||inStation==null||outStation==null){
 
             }else {
                 String in = poi_in+"|"+inStation;
@@ -108,7 +107,8 @@ public class ODLineServiceImpl implements ODLineService{
                         out_map_value.put(in,1);
                         out_map.put(out,out_map_value);
                     }
-                    Integer sum_out = out_map_count.get(out)+1;
+                    Integer sum_out = out_map_count.get(out);
+                    sum_out++;
                     out_map_count.put(out,sum_out);
                 }else{
                     HashMap<String,Integer> out_map_value = new HashMap<String, Integer>();
@@ -156,7 +156,7 @@ public class ODLineServiceImpl implements ODLineService{
                 Integer value_in = max_in_map.get(key_in);
                 buffer.append("[{name:\'"+max_in_key+"\'},{name:\'"+key_in+"\',value:"+value_in+"}],\r\n");
             }
-            buffer.append("],[\r\n");
+            buffer.append("]@[\r\n");
             for(String key_out:max_out_map.keySet()){
                 Integer value_out = max_out_map.get(key_out);
                 buffer.append("[{name:\'"+key_out+"\'},{name:\'"+max_out_key+"\',value:"+value_out+"}],\r\n");

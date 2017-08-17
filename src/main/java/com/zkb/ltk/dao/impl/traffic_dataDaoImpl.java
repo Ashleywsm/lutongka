@@ -4,6 +4,7 @@ import com.zkb.ltk.dao.traffic_dataDao;
 import com.zkb.ltk.model.traffic_data;
 
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,32 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
             Calendar c = Calendar.getInstance();
             c.setTime(date_start);
             c.add(Calendar.DAY_OF_MONTH,1);
+            Date date_end = c.getTime();
+            Timestamp time_start = new Timestamp(date_start.getTime());
+            Timestamp time_end = new Timestamp(date_end.getTime());
+
+            String hql = "from traffic_data where province = ? and inTime >= ? and outTime < ?";
+            Object[] values = new Object[3];
+            values[0] = province;
+            values[1] = time_start;
+            values[2] = time_end;
+            traffic_datas = super.hqlGetList(hql,values);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        return traffic_datas;
+    }
+    public List<traffic_data> getThirtyDataByProvinceDate(String province, String date){
+        List<traffic_data> traffic_datas = null;
+        try{
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+            Date date_start = sdf.parse(date);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date_start);
+            c.add(Calendar.DAY_OF_MONTH,30);
             Date date_end = c.getTime();
             Timestamp time_start = new Timestamp(date_start.getTime());
             Timestamp time_end = new Timestamp(date_end.getTime());
@@ -91,5 +118,15 @@ public class traffic_dataDaoImpl extends DaoImpl<traffic_data,String> implements
         values[0] = province;
         List<traffic_data> traffic_datas = super.sqlGetList(sql,values);
         return traffic_datas;
+    }
+
+    public int importFile(String[] array){
+        String sql = "insert into traffic_data(wasteID,exStation,paycard,lastMoney,inTime,inNetID,inStationID,origin,outTime,outNetID,outStationID,destination,weight,overlimit,plateColor,vehiclePlate,vehicleModel,province)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Object[] values = new Object[18];
+        for(int i=0;i<18;i++){
+            values[i] = array[i];
+        }
+        int truth = super.sqlUpdate(sql,values);
+        return truth;
     }
 }

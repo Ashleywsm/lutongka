@@ -34,7 +34,6 @@
                 "password":$('#password').val()},
             function(data){
                 if(data=="success"){
-
                     window.location.href="${ContextPath}/login/Workspace";
                 }else {
 

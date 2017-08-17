@@ -3,6 +3,7 @@ package com.zkb.ltk.controller;
 import com.zkb.ltk.service.ODLineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ public class ODController {
     ODLineService odLineService;
 
     @RequestMapping("/od")
+    @ResponseBody
     public String getODLine(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         String date = request.getParameter("date");
         String province = request.getParameter("province");

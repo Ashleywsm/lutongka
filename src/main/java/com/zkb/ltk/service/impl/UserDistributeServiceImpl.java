@@ -49,6 +49,7 @@ public class UserDistributeServiceImpl implements UserDistributeService {
             //用户消费次数统计
             if(AllconsumeNumber.containsKey(province)){
                 Integer number = AllconsumeNumber.get(province);
+                number++;
                 AllconsumeNumber.put(province,number);
             }else{
                 AllconsumeNumber.put(province,1);
@@ -129,16 +130,16 @@ public class UserDistributeServiceImpl implements UserDistributeService {
             sum_cocnsumemoney = sum_cocnsumemoney+consume;
         }
         HashMap<String ,Double> userConsumeMoney = new HashMap<String, Double>();
-        Double consume1 = AllconsumeMoney.get(array[0])/10000;
-        Double consume2 = AllconsumeMoney.get(array[1])/10000;
-        Double consume3 = AllconsumeMoney.get(array[2])/10000;
-        Double consume4 = AllconsumeMoney.get(array[3])/10000;
-        Double consume5 = AllconsumeMoney.get(array[4])/10000;
-        Double consume6 = AllconsumeMoney.get(array[5])/10000;
-        Double consume7 = AllconsumeMoney.get(array[6])/10000;
-        Double consume8 = AllconsumeMoney.get(array[7])/10000;
-        Double consume9 = AllconsumeMoney.get(array[8])/10000;
-        Double consume10 = AllconsumeMoney.get(array[9])/10000;
+        Double consume1 = AllconsumeMoney.get(array[0])/1000;
+        Double consume2 = AllconsumeMoney.get(array[1])/1000;
+        Double consume3 = AllconsumeMoney.get(array[2])/1000;
+        Double consume4 = AllconsumeMoney.get(array[3])/1000;
+        Double consume5 = AllconsumeMoney.get(array[4])/1000;
+        Double consume6 = AllconsumeMoney.get(array[5])/1000;
+        Double consume7 = AllconsumeMoney.get(array[6])/1000;
+        Double consume8 = AllconsumeMoney.get(array[7])/1000;
+        Double consume9 = AllconsumeMoney.get(array[8])/1000;
+        Double consume10 = AllconsumeMoney.get(array[9])/1000;
         Double consume11 = sum_cocnsumemoney/10000-consume1-consume2-consume3-consume4-consume5-consume6-consume7-consume8-consume9-consume10;
         userConsumeMoney.put(array[0],consume1);
         userConsumeMoney.put(array[1],consume2);
@@ -179,19 +180,19 @@ public class UserDistributeServiceImpl implements UserDistributeService {
         buffer.append("{name:\'"+array[7]+"\',max:"+max+"},");
         buffer.append("{name:\'"+array[8]+"\',max:"+max+"},");
         buffer.append("{name:\'"+array[9]+"\',max:"+max+"},");
-        buffer.append("{name:\'"+array[10]+"\',max:"+max+"},],");
+        buffer.append("{name:\'"+array[10]+"\',max:"+max+"},]@");
 
         buffer.append("["+userNumber.get(array[0])+","+userNumber.get(array[1])+","+userNumber.get(array[2])+","+userNumber.get(array[3])+","+
                 userNumber.get(array[4])+","+userNumber.get(array[5])+","+userNumber.get(array[6])+","+userNumber.get(array[7])+","+
-                userNumber.get(array[8])+","+userNumber.get(array[9])+","+userNumber.get(array[10])+"],");
+                userNumber.get(array[8])+","+userNumber.get(array[9])+","+userNumber.get(array[10])+"]@");
 
         buffer.append("["+userConsumeNumber.get(array[0])+","+userConsumeNumber.get(array[1])+","+userConsumeNumber.get(array[2])+","+userConsumeNumber.get(array[3])+","
                 +userConsumeNumber.get(array[4])+","+userConsumeNumber.get(array[5])+","+userConsumeNumber.get(array[6])+","+userConsumeNumber.get(array[7])+","
-                +userConsumeNumber.get(array[8])+","+userConsumeNumber.get(array[9])+","+userConsumeNumber.get(array[10])+"],");
+                +userConsumeNumber.get(array[8])+","+userConsumeNumber.get(array[9])+","+userConsumeNumber.get(array[10])+"]@");
 
         buffer.append("["+userConsumeMoney.get(array[0])+","+userConsumeMoney.get(array[1])+","+userConsumeMoney.get(array[2])+","+userConsumeMoney.get(array[3])+","
                 +userConsumeMoney.get(array[4])+","+userConsumeMoney.get(array[5])+","+userConsumeMoney.get(array[6])+","+userConsumeMoney.get(array[7])+","
-                +userConsumeMoney.get(array[8])+","+userConsumeMoney.get(array[9])+","+userConsumeMoney.get(array[10])+"],");
+                +userConsumeMoney.get(array[8])+","+userConsumeMoney.get(array[9])+","+userConsumeMoney.get(array[10])+"]");
 
 
 

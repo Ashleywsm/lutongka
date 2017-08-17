@@ -24,7 +24,7 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=t65FFKL6S3wBE51a06KGMyEm"></script>
 <script src="js/echarts.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src = "json/lulian.json"></script>
+<script type="text/javascript" src = "json/jiedian.json"></script>
 <style type="text/css"> @import "css/workspace.css";</style>
 
     <nav class="navbar navbar-fixed-top" role="navigation" id="nav1">
@@ -32,14 +32,16 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#" id="Title1">鲁通卡用户分析系统</a>
             </div>
-            <div>
-                <form id="myform">
-                    <div class="form-group">
-                        <input type="date"class="form-control" id="date"/>
-                        <input type="text" class="form-control" id="province"/>
-                    </div>
-                </form>
-                <button id="zkbzkbzkb" type = "button" onclick="submit_button()">提交</button>
+            <div id="date_user">
+                <%--<form id="myform">--%>
+                    <%--<div >--%>
+                    <label class="myLabel">日期：</label>
+                        <input type="date" style="height: 33px;" id="date"/>
+                    <label class="myLabel">省份：</label>
+                        <input type="text" style="height: 33px;" id="province" />
+                    <%--</div>--%>
+                <%--</form>--%>
+                <button id="zkbzkbzkb" class="btn btn-sm" type = "button" onclick="submit_button()">提交</button>
             </div>
         </div>
 
@@ -48,14 +50,13 @@
         <script type="text/javascript">
             var maindiv = document.getElementById("main");
             maindiv.style.height = document.body.clientHeight-101+"px";
-            //maindiv.style.width = document.body.clientWidth+"px";
         </script>
     <nav class="navbar navbar-fixed-bottom" role="navigation" id="nav2">
         <div>
             <ul class="nav nav-tabs nav-justified">
-                <li><a href="#">所占比例</a></li>
-                <li class="active"><a href="#">出行路线</a></li>
-                <li><a href="#">热门OD</a></li>
+                <li><a href="user.jsp">所占比例</a></li>
+                <li class="active"><a href="workspace.jsp">出行路线</a></li>
+                <li><a href="od.jsp">热门OD</a></li>
             </ul>
         </div>
     </nav>
@@ -63,8 +64,8 @@
 </body>
 <script type="text/javascript">
     var odmax0;
-    var zones;
     function submit_button(){
+        console.log(zones);
         $.ajax({
             type : "POST",  //提交方式
             url : "${ContextPath}/login/workspace/highwayline/two",//路径
@@ -75,24 +76,13 @@
                 "province":$('#province').val()
             },//数据，这里使用的是Json格式进行传输
             success : function(result) {//返回数据根据结果进行相应的处理
+//                alert("END");
                 odmax0=eval('('+result+')');
 //                zones = eval('('+result+')');
                 dealTheMap();
             }
         });
-        <%--$.ajax({--%>
-            <%--type : "POST",  //提交方式--%>
-            <%--url : "${ContextPath}/login/workspace/highwayline/one",//路径--%>
-            <%--async:"false",--%>
-            <%--dataType:"text",--%>
-            <%--data : {--%>
-                <%--"province":$('#province').val()--%>
-            <%--},//数据，这里使用的是Json格式进行传输--%>
-            <%--success : function(result) {//返回数据根据结果进行相应的处理--%>
-                <%--zones=result;--%>
-            <%--}--%>
-        <%--});--%>
-    }
+    };
     function dealTheMap(){
         var lines0 = odmax0.map(function(o){
             return o.map(function(p){
@@ -100,15 +90,13 @@
             });
         });
 
-//        var zone = eval('('+zones+')');
         var geodata = {};
-        zone.forEach(function(o){
+        zones.forEach(function(o){
             _name = o.name;
             _centerX = o.centerX;
             _centerY = o.centerY;
             geodata[_name] = [_centerX,_centerY];
         });
-
         var datearr = [];
         for (var i=0;i < 24; i++){
             if(i<10){
@@ -329,11 +317,11 @@
                             },
                             dataRange: {
                                 min : 1,
-                                max : 3000,
+                                max : 10,
                                 calculable : true,
                                 x: 'right',
                                 y: document.body.clientHeight-250,
-                                color: ['#12d6f2','#00a9e9','#2e30de','#601986'],
+                                color: ['#601986','#2e30de','#00a9e9','#12d6f2'],
                                 textStyle:{
                                     color:'#fff'
                                 }

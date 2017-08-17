@@ -12,33 +12,36 @@
 <html lang ="zh-cn">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>鲁通卡用户分析系统</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=t65FFKL6S3wBE51a06KGMyEm"></script>
+    <script src="js/echarts.js"></script>
+    <script src="js/station.js"></script>
+    <title>鲁通卡用户分析系统</title>
 </head>
 
 <body>
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=t65FFKL6S3wBE51a06KGMyEm"></script>
-<script src="js/echarts.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
-<style type="text/css"> @import "css/workspace.css";</style>
+<script type="text/javascript" src="json/station.json"></script>
+<style type="text/css"> @import "css/od.css";</style>
 
 <nav class="navbar navbar-fixed-top" role="navigation" id="nav1">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#" id="Title1">鲁通卡用户分析系统</a>
         </div>
-        <div>
-            <form id="form_od">
-                <div class="form-group">
-                    <input type="date" class="form-control" id="date"/>
-                    <input type="text" class="form-control" id="province"/>
-                </div>
-            </form>
-            <button type="submit" onclick="submit_button()">提交</button>
+        <div id="date_user">
+            <%--<div>--%><label class="myLabel">日期：</label>
+                <input type="date" style="height: 33px;" id="date"/>
+                <label class="myLabel">省份：</label>
+                <input type="text" style="height: 33px;" id="province"/>
+            <%--</div>--%>
+            <button type="submit" class="btn btn-sm" onclick="submit_button()">提交</button>
         </div>
     </div>
 
@@ -51,17 +54,19 @@
 <nav class="navbar navbar-fixed-bottom" role="navigation" id="nav2">
     <div>
         <ul class="nav nav-tabs nav-justified">
-            <li><a href="">所占比例</a></li>
-            <li><a href="">出行路线</a></li>
-            <li class="active"><a href="">热门OD</a></li>
+            <li><a href="user.jsp">用户情况</a></li>
+            <li><a href="workspace.jsp">出行路线</a></li>
+            <li class="active"><a href="od.jsp">热门OD</a></li>
         </ul>
     </div>
 </nav>
 
 </body>
 <script type="text/javascript">
-    var geodata;
-    var od ;
+    var geodata = getgeodata();
+    var odzero;
+    var odone;
+    var stringod;
 //按钮操作
     function submit_button(){
         $.ajax({
@@ -74,29 +79,18 @@
                 "province":$('#province').val()
             },//数据，这里使用的是Json格式进行传输
             success : function(result) {//返回数据根据结果进行相应的处理
-                od=eval('('+result+')');
-                dealTheMap();
+                dealTheMap(result);
             }
         });
-        <%--$.ajax({--%>
-            <%--type : "POST",  //提交方式--%>
-            <%--url : "${ContextPath}/login/workspace/odline/lnglat",//路径--%>
-            <%--async:"false",--%>
-            <%--dataType:"text",--%>
-            <%--data : {--%>
-                <%--"province":$('#province').val()--%>
-            <%--},//数据，这里使用的是Json格式进行传输--%>
-            <%--success : function(result) {//返回数据根据结果进行相应的处理--%>
-                <%--geodata=result;--%>
-            <%--}--%>
-        <%--});--%>
-    }
+    };
 //地图加载
-    function dealTheMap(){
-
+    function dealTheMap(result){
+        stringod = result.split("@");
+        odzero = eval('('+stringod[0]+')');
+        odone = eval('('+stringod[1]+')');
         require.config({
             paths: {
-                echarts: 'http://echarts.baidu.com/build/dist'
+                echarts: 'js'
             },
             packages: [
                 {
@@ -117,8 +111,12 @@
             function (echarts, BMapExtension) {
                 // 基于准备好的dom，初始化echarts图表
                 // 初始化地图
-                var mapcon = document.getElementById("main");
-                var BMapExt = new BMapExtension(mapcon, BMap, echarts,{
+                $('#main').css({
+                    height:$('body').height()+"px",
+                    width:$('body').width()
+                });
+//                var mapcon = document.getElementById("main");
+                var BMapExt = new BMapExtension($('#main')[0], BMap, echarts,{
                     enableMapClick: false
                 });
                 var map = BMapExt.getMap();
@@ -126,7 +124,7 @@
 
                 var startPoint = {x:118.881323,y:36.670064};
                 var point = new BMap.Point(startPoint.x, startPoint.y);
-                map.centerAndZoom(point, 9);
+                map.centerAndZoom(point, 6);
                 map.enableScrollWheelZoom(true);
                 // 地图自定义样式
                 map.setMapStyle({
@@ -262,9 +260,9 @@
                     ]
                 });
                 option = {
-                    color: ['gold', 'aqua', 'lime'],
+                    color: ['gold', 'aqua'],
                     title: {
-                        text: '热门OD',
+                        text: '月热门OD',
                         x: 'center',
                         textStyle: {
                             color: '#fff'
@@ -302,10 +300,10 @@
                     },
                     dataRange: {
                         min: 0,
-                        max: 3000,
+                        max: 200,
                         x: 'right',
                         calculable: true,
-                        color: ['#12d6f2','#00a9e9','#2e30de','#601986'],
+                        color: ['#601986','#2e30de','#00a9e9','#12d6f2'],
                         textStyle: {
                             color: '#fff'
                         }
@@ -336,7 +334,7 @@
                                     }
                                 }
                             },
-                            data: od[0]
+                            data: odzero
                         },
 
                     }, {
@@ -362,7 +360,7 @@
                                     }
                                 }
                             },
-                            data: od[1]
+                            data: odone
                         },
                     }
 
@@ -370,12 +368,8 @@
 
                 };
 
-
-
-
                 var myChart = BMapExt.initECharts(container);
                 BMapExt.setOption(option);
-                var ecConfig = require('echarts/config');
             });
     };
 

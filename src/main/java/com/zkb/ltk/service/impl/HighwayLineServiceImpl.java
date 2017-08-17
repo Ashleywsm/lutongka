@@ -78,7 +78,7 @@ public class HighwayLineServiceImpl implements HighwayLineService{
             String outStationID = trafficData.getOutStationID();
             String destination = trafficData.getDestination();
             String poi_out = comparisons.get(proID+"|"+outnetID+"|"+outStationID+"|"+destination+"|出");
-            if(poi_in.equals("null")||poi_out.equals("null")){
+            if(poi_in==null||poi_out==null){
 
             }else {
                 String path = paths.get(poi_in+"|"+poi_out);

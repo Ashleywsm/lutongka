@@ -24,16 +24,20 @@ public class pathDaoImpl extends DaoImpl<shortest_paths,String> implements pathD
     }
     public HashMap<String,String> getPathByProvinceID(String province){
         HashMap<String,String> shortestPath = new HashMap<String, String>();
-        String hql = "from shortest_paths where province = ?";
+        String hql = " from shortest_paths where province = ?";
+
+
         Object[] values = new Object[1];
         values[0] = province;
-        List<shortest_paths> paths = super.hqlGetList(hql,values);
+        shortestPath = super.myTest(hql,values);
+        /*List<shortest_paths> shortest_pathss = super.hqlGetList(hql, values);
+        List<shortest_paths> paths = shortest_pathss;
         for(int i=0;i<paths.size();i++){
             shortest_paths shortpath = paths.get(i);
             String path = shortpath.getPath();
             String id = shortpath.getId();
             shortestPath.put(id,path);
-        }
+        }*/
         return shortestPath;
     }
 }

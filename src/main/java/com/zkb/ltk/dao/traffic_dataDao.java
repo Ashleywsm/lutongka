@@ -2,6 +2,7 @@ package com.zkb.ltk.dao;
 
 import com.zkb.ltk.model.traffic_data;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.List;
 public interface traffic_dataDao extends Dao<traffic_data,String>{
     List<traffic_data> getDataByProvinceDate(String province,String date);
     List<traffic_data> getDataByStartEnd(String dateStart, String dateEnd);
+    List<traffic_data> getThirtyDataByProvinceDate(String province, String date);
     List<traffic_data> getDataByProvinceStartEnd(String province,String dateStart,String dateEnd);
     List<traffic_data> getDataByProvince(String province);
+    int importFile(String[] array);
 }
